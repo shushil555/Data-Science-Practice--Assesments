@@ -1,24 +1,33 @@
-## Life Expectancy Prediction — Predictive Analytics Project
+# PRT661 - Life Expectancy Prediction
 
-## Overview
+## Team Members
+- Ashish (Data Engineer / ML Engineer / Docs Lead)
+- Sadan (Data Engineer / Model Evaluator)
+- Pramod (Data Engineer / ML Engineer)
+- Sabin (Data Analyst / Visualisation Lead)
+- Shushil (Data Analyst / ML Engineer)
 
-This project applies regression-based predictive analytics to the WHO Life Expectancy dataset to predict life expectancy using health, economic, and social indicators across countries (2000–2015). It falls under Theme 2: Predictive Analytics and Forecasting.
-
-## Objectives
-
--Clean and prepare the dataset for analysis
-
--Perform exploratory data analysis (EDA) to identify key relationships
-
--Develop and compare regression models (Linear Regression, Random Forest, XGBoost)
-
--Evaluate model performance (RMSE, MAE, R²)
-
--Visualise predictions and key drivers of life expectancy
+## Project
+Predicting life expectancy using WHO dataset (2000-2015).
+193 countries, 2,938 rows, 22 columns.
 
 ## Dataset
+WHO Life Expectancy dataset from Kaggle.
 
-The project uses the Life Expectancy (WHO) dataset from Kaggle containing 2,938 records and 22 columns.
+## Models Used
+- Linear Regression (baseline) - R2=0.823
+- Random Forest (in progress)
+- XGBoost (in progress)
 
+## Storage
+Raw and processed data stored on Amazon S3:
+- s3://prt661-life-expectancy/raw/
+- s3://prt661-life-expectancy/processed/
 
-[Life Expectancy (WHO) Dataset](https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who)
+## How to Run
+1. Install requirements: pip install -r requirements.txt
+2. Run pipeline: python data_pipeline.py
+3. Open notebooks in /notebooks/ folder
+
+## GitHub
+https://github.com/shushil555/Data-Science-Practice--Assesments

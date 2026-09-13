@@ -15,14 +15,10 @@ Predicting life expectancy using WHO dataset (2000-2015).
 WHO Life Expectancy dataset from Kaggle.
 
 ## Models Used
-- Linear Regression (baseline) - R2=0.823
+- Linear Regression (baseline) - R2=0.8195
 - Random Forest (in progress)
 - XGBoost (in progress)
 
-## Storage
-Raw and processed data stored on Amazon S3:
-- s3://prt661-life-expectancy/raw/
-- s3://prt661-life-expectancy/processed/
 
 ## How to Run
 1. Install requirements: pip install -r requirements.txt

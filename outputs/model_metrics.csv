@@ -1,0 +1,5 @@
+Model,Split_RMSE,Split_MAE,Split_R2,GroupCV_RMSE,GroupCV_RMSE_sd,GroupCV_MAE,GroupCV_R2
+Linear Regression (A2 baseline),3.953,2.958,0.819,4.181,0.693,3.153,0.794
+Linear Regression (VIF-reduced),4.073,3.055,0.808,4.451,0.694,3.302,0.758
+Random Forest (tuned),1.663,1.047,0.968,2.767,0.508,2.007,0.91
+XGBoost (tuned),1.549,0.994,0.972,2.687,0.458,1.958,0.915

@@ -48,7 +48,8 @@ All AWS access uses IAM roles; no keys are stored in this repository.
 https://github.com/shushil555/Data-Science-Practice--Assesments
 
 
-##How to run Dashboard 
+##How to Run Dashboard 
+
 Open a terminal: Terminal > New Terminal
 Install the libraries:
        pip install -r requirements.txt

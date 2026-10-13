@@ -34,6 +34,7 @@ All AWS access uses IAM roles; no keys are stored in this repository.
 2. python data_pipeline.py "data/Life Expectancy Data.csv"
 3. python model_comparison.py
 4. (Optional) python s3_setup.py, then run redshift_load.sql in the Redshift query editor
+5. streamlit run dashboard.py  (opens the dashboard at http://localhost:8501)
 
 ## Results (5-fold cross-validation grouped by country)
 | Model | R² | RMSE (years) |

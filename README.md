@@ -15,8 +15,12 @@ Predicting life expectancy Which health, economic and social factors drive a cou
 WHO Life Expectancy dataset (Kaggle): 193 countries, 2000-2015, 2,938 rows, 22 columns.
 
 ## Dataset
-Download "Life Expectancy Data.csv" from Kaggle:
+Source: WHO Life Expectancy dataset on Kaggle (KumarRajarshi, 2018):
 https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who
+
+Included in `data/` so the project runs without a download:
+- `data/Life Expectancy Data.csv` - original file, unchanged
+- `data/processed_data.csv` - output of `data_pipeline.py` (2,928 rows, 183 countries), used by Redshift, the models and the dashboard
 
 ## Architecture
 S3 raw/ -> data_pipeline.py -> S3 processed/ -> Amazon Redshift (dashboard queries) and model training.

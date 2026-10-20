@@ -8,3 +8,5 @@ xgboost
 jupyter
 streamlit
 plotly
+joblib
+country_converter

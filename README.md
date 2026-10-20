@@ -36,11 +36,23 @@ All AWS access uses IAM roles; no keys are stored in this repository.
 ## How to Run
 1. pip install -r requirements.txt
 2. python data_pipeline.py "data/Life Expectancy Data.csv"
-3. python model_comparison.py
-4. (Optional) python s3_setup.py, then run redshift_load.sql in the Redshift query editor
-5. streamlit run dashboard.py  (opens the dashboard at http://localhost:8501)
+3. python model_comparison.py   (Assessment 3 comparison)
+4. python final_evaluation.py   (Assessment 4: nested country-based validation, forecast test on 2013-2015, model without mortality indicators, error by region, saves the final model)
+5. python predict.py new_data.csv   (inference with the saved model, 90% prediction ranges)
+6. (Optional) python s3_setup.py, then run redshift_load.sql in the Redshift query editor
+7. streamlit run dashboard.py  (opens the dashboard at http://localhost:8501)
 
-## Results (5-fold cross-validation grouped by country)
+## Final results (Assessment 4, nested country-based validation)
+VIF selection and hyperparameter tuning are done inside each outer training fold.
+
+| Model | R² | RMSE (years) | Later years 2013-15 RMSE |
+|---|---|---|---|
+| Linear Regression | 0.794 | 4.18 | 3.77 |
+| Random Forest (tuned in fold) | 0.910 | 2.77 | 2.27 |
+| XGBoost (tuned in fold) - final | 0.917 | 2.67 | 2.07 |
+| XGBoost without mortality indicators | 0.781 | 4.31 | 3.04 |
+
+## Assessment 3 results (5-fold cross-validation grouped by country)
 | Model | R² | RMSE (years) |
 |---|---|---|
 | Linear Regression (A2 baseline) | 0.794 | 4.18 |

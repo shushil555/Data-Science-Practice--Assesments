@@ -1,0 +1,35 @@
+{
+  "features": [
+    "Year",
+    "Adult Mortality",
+    "infant deaths",
+    "Alcohol",
+    "percentage expenditure",
+    "Hepatitis B",
+    "Measles",
+    "BMI",
+    "under-five deaths",
+    "Polio",
+    "Total expenditure",
+    "Diphtheria",
+    "HIV/AIDS",
+    "thinness 1-19 years",
+    "thinness 5-9 years",
+    "Income composition of resources",
+    "Schooling",
+    "log_GDP",
+    "log_Population",
+    "Status_Developed"
+  ],
+  "interval_90": {
+    "Developed": 3.54,
+    "Developing": 4.508
+  },
+  "best_params": {
+    "xgbregressor__subsample": 0.7,
+    "xgbregressor__n_estimators": 600,
+    "xgbregressor__max_depth": 6,
+    "xgbregressor__learning_rate": 0.03,
+    "xgbregressor__colsample_bytree": 0.6
+  }
+}

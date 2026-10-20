@@ -1,0 +1,6 @@
+Model,RMSE,MAE,R2
+Linear Regression,3.765,2.855,0.797
+Linear Regression (VIF in fold),3.813,2.909,0.791
+Random Forest (tuned in fold),2.272,1.568,0.926
+XGBoost (tuned in fold),2.073,1.399,0.938
+XGBoost without mortality indicators,3.039,2.128,0.867

@@ -6,7 +6,9 @@ Redshift and the models. It follows the Week 8 dashboard design ideas:
 KPIs, comparisons, relationships, distributions and compositions.
 
 Run:
-    pip install streamlit plotly pandas
+    pip install -r requirements.txt
+    python data_pipeline.py "data/Life Expectancy Data.csv"
+    python final_evaluation.py      # trains, evaluates and saves the model
     streamlit run dashboard.py
 """
 import pandas as pd
@@ -60,22 +62,50 @@ with right:
                                  barmode="overlay", color_discrete_map=COLOURS),
                     use_container_width=True)
 
-# ---------- Country drill-down ----------
-st.subheader("Country drill-down")
+# ---------- Country drill-down with model predictions ----------
+# predictions.csv comes from final_evaluation.py: each country's prediction was made
+# by a model that never saw that country (nested country-based validation).
+pred = pd.read_csv("outputs/predictions.csv")
+st.subheader("Country drill-down: actual vs predicted")
+st.caption("How an analyst uses this: pick a country, compare its recorded life expectancy with what "
+           "the model expects from its health, economic and social indicators, and check the 90% range. "
+           "A large gap flags the country for a closer look. The model shows associations, not causes: "
+           "changing one indicator will not necessarily change life expectancy.")
 country = st.selectbox("Choose a country", sorted(df["Country"].unique()),
                        index=sorted(df["Country"].unique()).index("Australia"))
-one = df[df["Country"] == country]
-st.plotly_chart(px.line(one, x="Year", y=TARGET, markers=True,
-                        title=f"{country}: life expectancy 2000–2015"),
-                use_container_width=True)
+one = pred[pred["Country"] == country].sort_values("Year")
+fig = px.line(one, x="Year", y=["Actual", "Predicted"], markers=True,
+              labels={"value": "Life expectancy (years)", "variable": ""},
+              color_discrete_map={"Actual": "#1f77b4", "Predicted": "#ff7f0e"})
+fig.add_scatter(x=list(one["Year"]) + list(one["Year"])[::-1],
+                y=list(one["Upper"]) + list(one["Lower"])[::-1],
+                fill="toself", fillcolor="rgba(255,127,14,0.15)", line=dict(width=0),
+                name="90% prediction range", hoverinfo="skip")
+st.plotly_chart(fig, use_container_width=True)
+st.write(f"Average prediction error for {country}: **{one['AbsError'].mean():.1f} years**")
 
-# ---------- Composition: model results ----------
+# ---------- Model results and error by region ----------
 st.subheader("Model results")
 left, right = st.columns(2)
 with left:
-    st.image("outputs/feature_importance.png", caption="Top 10 drivers (XGBoost)")
+    err = pd.read_csv("outputs/error_by_group.csv")
+    region = err[err["Group type"] == "Region"].sort_values("MAE")
+    st.plotly_chart(px.bar(region, x="MAE", y="Group", orientation="h", text="MAE",
+                           labels={"MAE": "Average error (years)", "Group": ""},
+                           title="Prediction error by region"), use_container_width=True)
 with right:
-    metrics = pd.read_csv("outputs/model_metrics.csv")
-    st.dataframe(metrics[["Model", "GroupCV_R2", "GroupCV_RMSE"]]
-                 .rename(columns={"GroupCV_R2": "R²", "GroupCV_RMSE": "RMSE (years)"}),
+    nested = pd.read_csv("outputs/nested_metrics.csv")
+    st.write("**Accuracy on unseen countries (nested validation)**")
+    st.dataframe(nested[["Model", "R2", "RMSE", "MAE"]]
+                 .rename(columns={"R2": "R²", "RMSE": "RMSE (years)", "MAE": "MAE (years)"}),
                  hide_index=True)
+    st.image("outputs/feature_importance.png", caption="Top 10 drivers (XGBoost)")
+
+# ---------- Inference on new data ----------
+st.subheader("Predict for new data")
+st.caption("Upload a CSV with the same columns as processed_data.csv (life expectancy not needed). "
+           "The saved final model (outputs/final_model.joblib) predicts each row with a 90% range.")
+upload = st.file_uploader("CSV file", type="csv")
+if upload is not None:
+    from predict import predict
+    st.dataframe(predict(pd.read_csv(upload)), hide_index=True)

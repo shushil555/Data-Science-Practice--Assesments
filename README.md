@@ -64,10 +64,13 @@ VIF selection and hyperparameter tuning are done inside each outer training fold
 https://github.com/shushil555/Data-Science-Practice--Assesments
 
 
-##How to Run Dashboard 
+## How to Run Dashboard 
 
 Open a terminal: Terminal > New Terminal
 Install the libraries:
        pip install -r requirements.txt
  Start the dashboard:
        python -m streamlit run dashboard.py
+
+
+
